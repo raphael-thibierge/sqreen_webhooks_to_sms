@@ -1,0 +1,15 @@
+{
+  "name": "sqreen_webhook_twilio",
+  "version": "0.0.1",
+  "description": "Screen webhook handler that sends an sms notification",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["sqreen", "webhook", "twilio"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
