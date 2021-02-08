@@ -23,11 +23,40 @@ function send_sms(message_body){
             });
 }
 
+// configure body parser
+const bodyParser = require('body-parser');
+app.use(bodyParser.raw({ type: 'application/json' }))
+
+// define sqreen signature verification function
+const SQREEN_WEBHOOK_KEY = process.env.SQREEN_WEBHOOK_KEY;
+const crypto = require('crypto');
+function check_signature(req) {
+    const digest = crypto.createHmac('sha256', SQREEN_WEBHOOK_KEY)
+        .update(req.body)
+        .digest();
+    return crypto.timingSafeEqual(digest,  Buffer.from(req.header('X-Sqreen-Integrity'), 'hex'));
+}
+
+
 // define main route
-app.get('/', (req, res) => {
-    send_sms('Hello world').then(twilio_response => {
-        res.send(`SMS content : ${twilio_response.body}`);
-    });
+app.post('/', (req, res) => {
+
+    // verify sqreen signature
+    if (check_signature(req)){
+        // parse webhook data
+        const data = JSON.parse(req.body.toString());
+
+        // prepare sms content
+        const sms_content = data[0].message_type;
+
+        // send sms and then HTTP response
+        send_sms(sms_content).then(twilio_response => {
+            res.send(`SMS content : ${twilio_response.body}`);
+        });
+    }
+    else {
+        res.send('check_signature failed !')
+    }
 })
 
 // start listening incoming requests
