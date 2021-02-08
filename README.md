@@ -1,4 +1,6 @@
 # Sqreen Webhook to SMS handler
+![CI](https://github.com/raphael-thibierge/sqreen_webhooks_to_sms/workflows/CI/badge.svg)
+
 Based on NodeJS + Express.
 
 Handle [Sqreen](https://www.sqreen.com) HTTP webhooks and send basic infos by SMS using [Twilio](https://www.twilio.com).
