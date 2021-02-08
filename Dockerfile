@@ -8,6 +8,6 @@ WORKDIR /app
 
 RUN npm install --no-cache
 
-CMD ["node", "app.js"]
+CMD ["node", "server.js"]
 
 EXPOSE 3000
