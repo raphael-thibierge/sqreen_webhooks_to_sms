@@ -37,13 +37,14 @@ function check_signature(req) {
     return crypto.timingSafeEqual(digest,  Buffer.from(req.header('X-Sqreen-Integrity'), 'hex'));
 }
 
-
 // define main route
 app.post('/', (req, res) => {
 
     // verify sqreen signature
     if (check_signature(req)){
+
         // parse webhook data
+        // WARNING : we only process first message
         const data = JSON.parse(req.body.toString())[0];
 
         // prepare sms content
