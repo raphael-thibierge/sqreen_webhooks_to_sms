@@ -44,14 +44,41 @@ app.post('/', (req, res) => {
     // verify sqreen signature
     if (check_signature(req)){
         // parse webhook data
-        const data = JSON.parse(req.body.toString());
+        const data = JSON.parse(req.body.toString())[0];
 
         // prepare sms content
-        const sms_content = data[0].message_type;
+        let sms_content = "Empty sms...";
+        switch (data.message_type) {
+            case 'test':
+                sms_content = "Sqreen webhook test";
+                break;
+
+            case 'security_event':
+                sms_content = "New security event : \n"
+                    +`App: ${data.message.application_name}\n`
+                    +`Env: ${data.message.environment}\n`
+                    + data.message.humanized_description;
+                break;
+
+            case 'security_response':
+                sms_content = "New security response triggered : \n"
+                    +`App: ${data.message.application.name}\n`
+                    +`Env: ${data.message.application.environment}\n`
+                    +`Playbook: ${data.message.playbook.name}`;
+                break;
+
+            default:
+                sms_content = "New security incident : \n"
+                    +`App: ${data.message.application_id}\n`
+                    +`Type: ${data.message_type}`;
+                break;
+
+        }
+
 
         // send sms and then HTTP response
         send_sms(sms_content).then(twilio_response => {
-            res.send(`SMS content : ${twilio_response.body}`);
+            res.send(`SMS content :\n ${twilio_response.body}`);
         });
     }
     else {
