@@ -14,7 +14,7 @@ docker run -p 3000:3000 sqreen_webhooks
 ```
 
 ## TODOs
-- [ ] tests
+- [x] tests on sqreen sample
 - [x] refactoring
 - [ ] request body validation
 - [ ] process multiple messages from request body, not only the first one

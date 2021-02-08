@@ -2,9 +2,9 @@
   "name": "sqreen_webhook_twilio",
   "version": "0.0.1",
   "description": "Screen webhook handler that sends an sms notification",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "sqreen",
@@ -18,6 +18,17 @@
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.9.2",
     "twilio": "^3.55.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
