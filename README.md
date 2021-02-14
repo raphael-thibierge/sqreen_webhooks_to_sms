@@ -12,7 +12,7 @@ Note: this is very minimal and was created just to play around with Sqreen webho
 - Run it with docker
 ```bash
 docker build . -t sqreen_webhooks
-docker run -p 3000:3000 sqreen_webhooks
+docker run -p 3000:3000 --env-file .env sqreen_webhooks
 ```
 
 ## TODOs
